@@ -1,0 +1,623 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api-documentation for
+    <a
+        
+        href="https://helmetjs.github.io/"
+        
+    >helmet (v3.5.0)</a>
+</h1>
+<h4>help secure Express/Connect apps with various HTTP headers</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+    
+    <li class="apidocModuleLi"><a href="#apidoc.module.helmet">module helmet</a><ol>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.contentSecurityPolicy">
+            function <span class="apidocSignatureSpan">helmet.</span>contentSecurityPolicy
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.dnsPrefetchControl">
+            function <span class="apidocSignatureSpan">helmet.</span>dnsPrefetchControl
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.frameguard">
+            function <span class="apidocSignatureSpan">helmet.</span>frameguard
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.hidePoweredBy">
+            function <span class="apidocSignatureSpan">helmet.</span>hidePoweredBy
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.hpkp">
+            function <span class="apidocSignatureSpan">helmet.</span>hpkp
+            <span class="apidocSignatureSpan">(passedOptions)</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.hsts">
+            function <span class="apidocSignatureSpan">helmet.</span>hsts
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.ieNoOpen">
+            function <span class="apidocSignatureSpan">helmet.</span>ieNoOpen
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.noCache">
+            function <span class="apidocSignatureSpan">helmet.</span>noCache
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.noSniff">
+            function <span class="apidocSignatureSpan">helmet.</span>noSniff
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.referrerPolicy">
+            function <span class="apidocSignatureSpan">helmet.</span>referrerPolicy
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.xssFilter">
+            function <span class="apidocSignatureSpan">helmet.</span>xssFilter
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+            
+        </li>
+        
+    </ol></li>
+    
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.helmet" id="apidoc.module.helmet">module helmet</a></h1>
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.contentSecurityPolicy" id="apidoc.element.helmet.contentSecurityPolicy">
+        function <span class="apidocSignatureSpan">helmet.</span>contentSecurityPolicy
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function csp(options) {
+  checkOptions(options)
+
+  var originalDirectives = camelize(options.directives || {})
+  var directivesAreDynamic = containsFunction(originalDirectives)
+  var shouldBrowserSniff = options.browserSniff !== false
+  var reportOnlyIsFunction = isFunction(options.reportOnly)
+
+  if (shouldBrowserSniff) {
+    return function csp (req, res, next) {
+      var userAgent = req.headers[&#x27;user-agent&#x27;]
+
+      var browser
+      if (userAgent) {
+        browser = platform.parse(userAgent)
+      } else {
+        browser = {}
+      }
+
+      var headerKeys
+      if (options.setAllHeaders || !userAgent) {
+        headerKeys = config.allHeaders
+      } else {
+        headerKeys = getHeaderKeysForBrowser(browser, options)
+      }
+
+      if (headerKeys.length === 0) {
+        next()
+        return
+      }
+
+      var directives = transformDirectivesForBrowser(browser, originalDirectives)
+
+      if (directivesAreDynamic) {
+        directives = parseDynamicDirectives(directives, [req, res])
+      }
+
+      var policyString = cspBuilder({ directives: directives })
+
+      headerKeys.forEach(function (headerKey) {
+        if ((reportOnlyIsFunction &#x26;&#x26; options.reportOnly(req, res)) ||
+            (!reportOnlyIsFunction &#x26;&#x26; options.reportOnly)) {
+          headerKey += &#x27;-Report-Only&#x27;
+        }
+        res.setHeader(headerKey, policyString)
+      })
+
+      next()
+    }
+  } else {
+    var headerKeys
+    if (options.setAllHeaders) {
+      headerKeys = config.allHeaders
+    } else {
+      headerKeys = [&#x27;Content-Security-Policy&#x27;]
+    }
+
+    return function csp (req, res, next) {
+      var directives = parseDynamicDirectives(originalDirectives, [req, res])
+      var policyString = cspBuilder({ directives: directives })
+
+      if ((reportOnlyIsFunction &#x26;&#x26; options.reportOnly(req, res)) ||
+          (!reportOnlyIsFunction &#x26;&#x26; options.reportOnly)) {
+        headerKeys.forEach(function (headerKey) {
+          res.setHeader(headerKey + &#x27;-Report-Only&#x27;, policyString)
+        })
+      } else {
+        headerKeys.forEach(function (headerKey) {
+          res.setHeader(headerKey, policyString)
+        })
+      }
+
+      next()
+    }
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.dnsPrefetchControl" id="apidoc.element.helmet.dnsPrefetchControl">
+        function <span class="apidocSignatureSpan">helmet.</span>dnsPrefetchControl
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function dnsPrefetchControl(options) {
+  if (options &#x26;&#x26; options.allow) {
+    return function dnsPrefetchControl (req, res, next) {
+      res.setHeader(&#x27;X-DNS-Prefetch-Control&#x27;, &#x27;on&#x27;)
+      next()
+    }
+  } else {
+    return function dnsPrefetchControl (req, res, next) {
+      res.setHeader(&#x27;X-DNS-Prefetch-Control&#x27;, &#x27;off&#x27;)
+      next()
+    }
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.frameguard" id="apidoc.element.helmet.frameguard">
+        function <span class="apidocSignatureSpan">helmet.</span>frameguard
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function frameguard(options) {
+  options = options || {}
+
+  var domain = options.domain
+  var action = options.action
+
+  var directive
+  if (action === undefined) {
+    directive = &#x27;SAMEORIGIN&#x27;
+  } else if (isString(action)) {
+    directive = action.toUpperCase()
+  }
+
+  if (directive === &#x27;ALLOWFROM&#x27;) {
+    directive = &#x27;ALLOW-FROM&#x27;
+  } else if (directive === &#x27;SAME-ORIGIN&#x27;) {
+    directive = &#x27;SAMEORIGIN&#x27;
+  }
+
+  if ([&#x27;DENY&#x27;, &#x27;ALLOW-FROM&#x27;, &#x27;SAMEORIGIN&#x27;].indexOf(directive) === -1) {
+    throw new Error(&#x27;action must be undefined, &#x22;DENY&#x22;, &#x22;ALLOW-FROM&#x22;, or &#x22;SAMEORIGIN&#x22;.&#x27;)
+  }
+
+  if (directive === &#x27;ALLOW-FROM&#x27;) {
+    if (!isString(domain)) {
+      throw new Error(&#x27;ALLOW-FROM action requires a domain parameter.&#x27;)
+    }
+    if (!domain.length) {
+      throw new Error(&#x27;domain parameter must not be empty.&#x27;)
+    }
+    directive = &#x27;ALLOW-FROM &#x27; + domain
+  }
+
+  return function frameguard (req, res, next) {
+    res.setHeader(&#x27;X-Frame-Options&#x27;, directive)
+    next()
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+It&#x27;s best to `use` Helmet early in your middleware stack so that its headers are sure to be set.
+
+You can also use its pieces individually:
+
+```js
+app.use(helmet.noCache())
+app.use(helmet.<span class="apidocCodeKeywordSpan">frameguard</span>())
+```
+
+You can disable a middleware that&#x27;s normally enabled by default. This will disable `frameguard` but include the other defau\
+lts.
+
+```js
+app.use(helmet({
+frameguard: false
+...</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.hidePoweredBy" id="apidoc.element.helmet.hidePoweredBy">
+        function <span class="apidocSignatureSpan">helmet.</span>hidePoweredBy
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function hidePoweredBy(options) {
+  var setTo = (options || {}).setTo
+
+  if (setTo) {
+    return function hidePoweredBy (req, res, next) {
+      res.setHeader(&#x27;X-Powered-By&#x27;, setTo)
+      next()
+    }
+  } else {
+    return function hidePoweredBy (req, res, next) {
+      res.removeHeader(&#x27;X-Powered-By&#x27;)
+      next()
+    }
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.hpkp" id="apidoc.element.helmet.hpkp">
+        function <span class="apidocSignatureSpan">helmet.</span>hpkp
+        <span class="apidocSignatureSpan">(passedOptions)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function hpkp(passedOptions) {
+  var options = parseOptions(passedOptions)
+  var headerKey = getHeaderKey(options)
+  var headerValue = getHeaderValue(options)
+
+  return function hpkp (req, res, next) {
+    var setHeader = true
+    var setIf = options.setIf
+
+    if (setIf) {
+      setHeader = setIf(req, res)
+    }
+
+    if (setHeader) {
+      res.setHeader(headerKey, headerValue)
+    }
+
+    next()
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.hsts" id="apidoc.element.helmet.hsts">
+        function <span class="apidocSignatureSpan">helmet.</span>hsts
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function hsts(options) {
+  options = options || {}
+
+  var maxAge = options.maxAge != null ? options.maxAge : defaultMaxAge
+  var includeSubDomains = (options.includeSubDomains !== false) &#x26;&#x26; (options.includeSubdomains !== false)
+  var force = options.force
+  var setIf = options.setIf
+
+  if (options.hasOwnProperty(&#x27;maxage&#x27;)) {
+    throw new Error(&#x27;maxage is not a supported property. Did you mean to pass &#x22;maxAge&#x22; instead of &#x22;maxage&#x22;?&#x27;)
+  }
+  if (arguments.length &#x3e; 1) {
+    throw new Error(&#x27;HSTS passed the wrong number of arguments.&#x27;)
+  }
+  if (!util.isNumber(maxAge)) {
+    throw new TypeError(&#x27;HSTS must be passed a numeric maxAge parameter.&#x27;)
+  }
+  if (maxAge &#x3c; 0) {
+    throw new RangeError(&#x27;HSTS maxAge must be nonnegative.&#x27;)
+  }
+  if (options.hasOwnProperty(&#x27;setIf&#x27;)) {
+    if (!util.isFunction(setIf)) {
+      throw new TypeError(&#x27;setIf must be a function.&#x27;)
+    }
+    if (options.hasOwnProperty(&#x27;force&#x27;)) {
+      throw new Error(&#x27;setIf and force cannot both be specified.&#x27;)
+    }
+  }
+  if (options.hasOwnProperty(&#x27;includeSubDomains&#x27;) &#x26;&#x26; options.hasOwnProperty(&#x27;includeSubdomains&#x27;)) {
+    throw new Error(&#x27;includeSubDomains and includeSubdomains cannot both be specified.&#x27;)
+  }
+
+  var header = &#x27;max-age=&#x27; + Math.round(maxAge)
+  if (includeSubDomains) {
+    header += &#x27;; includeSubDomains&#x27;
+  }
+  if (options.preload) {
+    header += &#x27;; preload&#x27;
+  }
+
+  return function hsts (req, res, next) {
+    var setHeader
+    if (setIf) {
+      setHeader = setIf(req, res)
+    } else {
+      setHeader = force || req.secure
+    }
+
+    if (setHeader) {
+      res.setHeader(&#x27;Strict-Transport-Security&#x27;, header)
+    }
+
+    next()
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.ieNoOpen" id="apidoc.element.helmet.ieNoOpen">
+        function <span class="apidocSignatureSpan">helmet.</span>ieNoOpen
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function ienoopen() {
+  return function ienoopen (req, res, next) {
+    res.setHeader(&#x27;X-Download-Options&#x27;, &#x27;noopen&#x27;)
+    next()
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.noCache" id="apidoc.element.helmet.noCache">
+        function <span class="apidocSignatureSpan">helmet.</span>noCache
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function nocache() {
+  return function nocache (req, res, next) {
+    res.setHeader(&#x27;Surrogate-Control&#x27;, &#x27;no-store&#x27;)
+    res.setHeader(&#x27;Cache-Control&#x27;, &#x27;no-store, no-cache, must-revalidate, proxy-revalidate&#x27;)
+    res.setHeader(&#x27;Pragma&#x27;, &#x27;no-cache&#x27;)
+    res.setHeader(&#x27;Expires&#x27;, &#x27;0&#x27;)
+
+    next()
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+```
+
+It&#x27;s best to `use` Helmet early in your middleware stack so that its headers are sure to be set.
+
+You can also use its pieces individually:
+
+```js
+app.use(helmet.<span class="apidocCodeKeywordSpan">noCache</span>())
+app.use(helmet.frameguard())
+```
+
+You can disable a middleware that&#x27;s normally enabled by default. This will disable `frameguard` but include the other defau\
+lts.
+
+```js
+app.use(helmet({
+...</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.noSniff" id="apidoc.element.helmet.noSniff">
+        function <span class="apidocSignatureSpan">helmet.</span>noSniff
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function nosniff() {
+  return function nosniff (req, res, next) {
+    res.setHeader(&#x27;X-Content-Type-Options&#x27;, &#x27;nosniff&#x27;)
+    next()
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.referrerPolicy" id="apidoc.element.helmet.referrerPolicy">
+        function <span class="apidocSignatureSpan">helmet.</span>referrerPolicy
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function referrerPolicy(options) {
+  options = options || {}
+
+  var policy
+  if (&#x27;policy&#x27; in options) {
+    policy = options.policy
+  } else {
+    policy = DEFAULT_POLICY
+  }
+
+  if (ALLOWED_POLICIES.indexOf(policy) === -1) {
+    throw new Error(&#x27;&#x22;&#x27; + policy + &#x27;&#x22; is not a valid policy. Allowed policies: &#x27; + ALLOWED_POLICIES_ERROR_LIST + &#x27;.&#x27;)
+  }
+
+  return function referrerPolicy (req, res, next) {
+    res.setHeader(&#x27;Referrer-Policy&#x27;, policy)
+    next()
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.helmet.xssFilter" id="apidoc.element.helmet.xssFilter">
+        function <span class="apidocSignatureSpan">helmet.</span>xssFilter
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function xXssProtection(options) {
+  if (options &#x26;&#x26; options.setOnOldIE) {
+    return function xXssProtection (req, res, next) {
+      res.setHeader(&#x27;X-XSS-Protection&#x27;, &#x27;1; mode=block&#x27;)
+      next()
+    }
+  } else {
+    return function xXssProtection (req, res, next) {
+      var matches = /msie\s*(\d+)/i.exec(req.headers[&#x27;user-agent&#x27;])
+
+      var value
+      if (!matches || (parseFloat(matches[1]) &#x3e;= 9)) {
+        value = &#x27;1; mode=block&#x27;
+      } else {
+        value = &#x27;0&#x27;
+      }
+
+      res.setHeader(&#x27;X-XSS-Protection&#x27;, value)
+      next()
+    }
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+    
+    
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
