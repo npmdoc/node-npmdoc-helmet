@@ -46,11 +46,11 @@
     font-weight: bold;
 }
 </style>
-<h1>api-documentation for
+<h1>api documentation for
     <a
-        
+
         href="https://helmetjs.github.io/"
-        
+
     >helmet (v3.5.0)</a>
 </h1>
 <h4>help secure Express/Connect apps with various HTTP headers</h4>
@@ -58,116 +58,116 @@
     href="#apidoc.tableOfContents"
     id="apidoc.tableOfContents"
 ><h1>table of contents</h1></a><ol>
-    
+
     <li class="apidocModuleLi"><a href="#apidoc.module.helmet">module helmet</a><ol>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.contentSecurityPolicy">
             function <span class="apidocSignatureSpan">helmet.</span>contentSecurityPolicy
             <span class="apidocSignatureSpan">(options)</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.dnsPrefetchControl">
             function <span class="apidocSignatureSpan">helmet.</span>dnsPrefetchControl
             <span class="apidocSignatureSpan">(options)</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.frameguard">
             function <span class="apidocSignatureSpan">helmet.</span>frameguard
             <span class="apidocSignatureSpan">(options)</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.hidePoweredBy">
             function <span class="apidocSignatureSpan">helmet.</span>hidePoweredBy
             <span class="apidocSignatureSpan">(options)</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.hpkp">
             function <span class="apidocSignatureSpan">helmet.</span>hpkp
             <span class="apidocSignatureSpan">(passedOptions)</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.hsts">
             function <span class="apidocSignatureSpan">helmet.</span>hsts
             <span class="apidocSignatureSpan">(options)</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.ieNoOpen">
             function <span class="apidocSignatureSpan">helmet.</span>ieNoOpen
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.noCache">
             function <span class="apidocSignatureSpan">helmet.</span>noCache
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.noSniff">
             function <span class="apidocSignatureSpan">helmet.</span>noSniff
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.referrerPolicy">
             function <span class="apidocSignatureSpan">helmet.</span>referrerPolicy
             <span class="apidocSignatureSpan">(options)</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.xssFilter">
             function <span class="apidocSignatureSpan">helmet.</span>xssFilter
             <span class="apidocSignatureSpan">(options)</span>
             </a>
-            
+
         </li>
-        
+
     </ol></li>
-    
+
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.helmet" id="apidoc.module.helmet">module helmet</a></h1>
-    
-    
+
+
     <h2>
         <a href="#apidoc.element.helmet.contentSecurityPolicy" id="apidoc.element.helmet.contentSecurityPolicy">
         function <span class="apidocSignatureSpan">helmet.</span>contentSecurityPolicy
@@ -253,9 +253,9 @@
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.dnsPrefetchControl" id="apidoc.element.helmet.dnsPrefetchControl">
         function <span class="apidocSignatureSpan">helmet.</span>dnsPrefetchControl
@@ -278,9 +278,9 @@
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.frameguard" id="apidoc.element.helmet.frameguard">
         function <span class="apidocSignatureSpan">helmet.</span>frameguard
@@ -337,17 +337,17 @@ app.use(helmet.noCache())
 app.use(helmet.<span class="apidocCodeKeywordSpan">frameguard</span>())
 ```
 
-You can disable a middleware that&#x27;s normally enabled by default. This will disable `frameguard` but include the other defau\
-lts.
+You can disable a middleware that&#x27;s normally enabled by default. This will disable `frameguard` but include the other defaults
+.
 
 ```js
 app.use(helmet({
 frameguard: false
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.hidePoweredBy" id="apidoc.element.helmet.hidePoweredBy">
         function <span class="apidocSignatureSpan">helmet.</span>hidePoweredBy
@@ -372,9 +372,9 @@ frameguard: false
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.hpkp" id="apidoc.element.helmet.hpkp">
         function <span class="apidocSignatureSpan">helmet.</span>hpkp
@@ -404,9 +404,9 @@ frameguard: false
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.hsts" id="apidoc.element.helmet.hsts">
         function <span class="apidocSignatureSpan">helmet.</span>hsts
@@ -471,9 +471,9 @@ frameguard: false
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.ieNoOpen" id="apidoc.element.helmet.ieNoOpen">
         function <span class="apidocSignatureSpan">helmet.</span>ieNoOpen
@@ -489,9 +489,9 @@ frameguard: false
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.noCache" id="apidoc.element.helmet.noCache">
         function <span class="apidocSignatureSpan">helmet.</span>noCache
@@ -521,16 +521,16 @@ app.use(helmet.<span class="apidocCodeKeywordSpan">noCache</span>())
 app.use(helmet.frameguard())
 ```
 
-You can disable a middleware that&#x27;s normally enabled by default. This will disable `frameguard` but include the other defau\
-lts.
+You can disable a middleware that&#x27;s normally enabled by default. This will disable `frameguard` but include the other defaults
+.
 
 ```js
 app.use(helmet({
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.noSniff" id="apidoc.element.helmet.noSniff">
         function <span class="apidocSignatureSpan">helmet.</span>noSniff
@@ -546,9 +546,9 @@ app.use(helmet({
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.referrerPolicy" id="apidoc.element.helmet.referrerPolicy">
         function <span class="apidocSignatureSpan">helmet.</span>referrerPolicy
@@ -577,9 +577,9 @@ app.use(helmet({
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.helmet.xssFilter" id="apidoc.element.helmet.xssFilter">
         function <span class="apidocSignatureSpan">helmet.</span>xssFilter
@@ -611,8 +611,8 @@ app.use(helmet({
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
+
+
 </div>
 
 <div class="apidocFooterDiv">
