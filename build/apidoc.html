@@ -63,6 +63,15 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.helmet.helmet">
+            function <span class="apidocSignatureSpan"></span>helmet
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.helmet.contentSecurityPolicy">
             function <span class="apidocSignatureSpan">helmet.</span>contentSecurityPolicy
             <span class="apidocSignatureSpan">(options)</span>
@@ -166,6 +175,43 @@
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.helmet" id="apidoc.module.helmet">module helmet</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.helmet.helmet" id="apidoc.element.helmet.helmet">
+        function <span class="apidocSignatureSpan"></span>helmet
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function helmet(options) {
+  options = options || {}
+
+  var chain = connect()
+
+  middlewares.forEach(function (middlewareName) {
+    var middleware = helmet[middlewareName]
+    var option = options[middlewareName]
+    var isDefault = config.defaultMiddleware.indexOf(middlewareName) !== -1
+
+    if (option === false) { return }
+
+    if (option != null) {
+      if (option === true) {
+        chain.use(middleware({}))
+      } else {
+        chain.use(middleware(option))
+      }
+    } else if (isDefault) {
+      chain.use(middleware({}))
+    }
+  })
+
+  return chain
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 
     <h2>
